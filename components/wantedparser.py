@@ -1,5 +1,3 @@
-import bs4
-
 from .parser import Parser
 import requests
 import json
@@ -10,10 +8,13 @@ class WantedParser(Parser):
     def __init__(self, url: str) -> None:
         self.url = url
 
-    def _parse(self) -> str:
-        return self.get_row_data().__str__()
+    def _parse(self) -> dict:
+        return self.get_row_data()
 
     def get_row_data(self) -> dict:
+        # shield pattern
+        if self.url is None: raise Exception("url이 존재하지 않습니다.")
+
         list_id = self.get_list_of_id()
         list_of_data = {}
         for id in list_id:
@@ -26,6 +27,7 @@ class WantedParser(Parser):
         list_of_id = []
         flag = True
         # while (flag):
+        # Todo: url parameters have to be refactored
         html = requests.get(
             self.url + f"/api/v4/jobs?1670145066301&country=kr&tag_type_ids=518&job_sort=company.response_rate_order&locations=all&years=-1&limit={limit}&offset={offset}")
         soup = BeautifulSoup(html.text, "html.parser")
@@ -39,6 +41,8 @@ class WantedParser(Parser):
         return list_of_id
 
     def get_info_of(self, id: str) -> dict:
+        if type(id) == "number" or id is None: raise Exception(f"다음 id({id})를 확인바랍니다.")
+
         target_data = ["jd", "company_name", "logo_img", "address", "due_time", "requirements", "main_tasks"]
         url = self.url + f"/wd/{id}"
         html = requests.get(url)
