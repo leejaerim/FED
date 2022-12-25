@@ -14,7 +14,6 @@ class WantedParser(Parser):
     def get_row_data(self) -> dict:
         # shield pattern
         if self.url is None: raise Exception("url이 존재하지 않습니다.")
-
         list_id = self.get_list_of_id()
         list_of_data = {}
         for id in list_id:
@@ -23,7 +22,7 @@ class WantedParser(Parser):
 
     def get_list_of_id(self) -> list:
         offset = 0
-        limit = 2
+        limit = 1
         list_of_id = []
         flag = True
         # while (flag):
@@ -42,8 +41,7 @@ class WantedParser(Parser):
 
     def get_info_of(self, id: str) -> dict:
         if type(id) == "number" or id is None: raise Exception(f"다음 id({id})를 확인바랍니다.")
-
-        target_data = ["jd", "company_name", "logo_img", "address", "due_time", "requirements", "main_tasks"]
+        target_data = ["jd", "company_name", "logo_img", "address", "due_time", "requirements", "main_tasks", "is_newbie","is_expert"]
         url = self.url + f"/wd/{id}"
         html = requests.get(url)
         soup = BeautifulSoup(html.text, "html.parser")
