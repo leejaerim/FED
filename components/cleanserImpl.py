@@ -1,5 +1,5 @@
 from components.cleanser import Cleanser
-from stack_list import stack_list, option_stack
+from stack_list import eratos
 
 
 class WantedCleanser(Cleanser):
@@ -15,10 +15,7 @@ class WantedCleanser(Cleanser):
         pass
     def get_stack(self) -> list:
         stack = []
-        for word in self.dict['jd'].replace('\n', '').split(' '):
-            if word.lower() in stack_list:
-                # target resemble one of option stack
-                if word.lower() in option_stack.keys():
-                    word = option_stack[word.lower()]
+        for word in eratos:
+            if word in self.dict['jd'].lower():
                 stack.append(word)
         return stack
