@@ -6,3 +6,6 @@
 - `poetry add` 명령어를 통해 패키지를 추가할 수 있다.
 
 - 인터프리터 변경을 통해 3.11 버전을 꼭 확인하여 작업을 진행하도록 한다.
+
+### add package to using mysql  
+- `poetry add SQLAlchemy mysqlclient PyMySQL 'databases[mysql]'`
