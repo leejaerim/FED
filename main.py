@@ -1,8 +1,11 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 
-from components.wantedcleanser import WantedCleanser
-from components.wantedparser import WantedParser
+from components.cleanserImpl import WantedCleanser
+from components.parserImpl import WantedParser
+from sql_app.Employment.router import emp_router
+from sql_app.Stack.router import stack_router
+from sql_app.database import db_instance
 
 app = FastAPI()
 
@@ -25,3 +28,24 @@ async def get_stack_data(jobs_id):
     data_dict = WantedParser("https://www.wanted.co.kr").get_info_of(jobs_id)
     cleanser = WantedCleanser(data_dict)
     return HTMLResponse(content=cleanser.get_stack().__str__(), status_code=200)
+
+
+# 서버 시작시 db connect
+@app.on_event("startup")
+async def startup():
+    await db_instance.connect()
+
+# 서버 종료시 db disconnect
+@app.on_event("shutdown")
+async def shutdown():
+    await db_instance.disconnect()
+
+# fastapi middleware, request state 에 db connection 심기
+@app.middleware("http")
+async def state_insert(request: Request, call_next):
+    request.state.db_conn = db_instance
+    response = await call_next(request)
+    return response
+
+app.include_router(stack_router)
+app.include_router(emp_router)
