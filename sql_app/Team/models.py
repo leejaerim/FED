@@ -2,7 +2,7 @@ from sqlalchemy import Table, Column, String, Integer, ForeignKey
 from sql_app.database import db_metadata, db_engine
 
 team = Table(
-    "stack",
+    "team",
     db_metadata,
     Column("team_id", Integer, primary_key=True, autoincrement=True),
     Column("team_name", String(20), nullable=False),
