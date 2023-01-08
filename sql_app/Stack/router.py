@@ -1,5 +1,4 @@
 from typing import List
-
 from fastapi.routing import APIRouter
 from sql_app.Stack.schema import StackCreate, StackSelect
 from fastapi.param_functions import Depends
@@ -23,7 +22,6 @@ async def stack_select(
     query = stack.select().offset(offset).limit(limit)
     return await db.fetch_all(query)
 
-
 @stack_router.post("/stack")
 async def stack_create(
         req: StackCreate,
@@ -32,11 +30,7 @@ async def stack_create(
     query = stack.insert()
     values = req.dict()
     await db.execute(query, values)
-
     return {**req.dict()}
-
-
-
 
 @stack_router.get("/stack/id/{id}",response_model=StackSelect)
 async def stack_select(

@@ -3,6 +3,8 @@ from fastapi.responses import HTMLResponse
 
 from components.cleanserImpl import WantedCleanser
 from components.parserImpl import WantedParser
+from components.savers import Savers
+from saver.jobsaver import JobSaver
 from sql_app.Employment.router import emp_router
 from sql_app.Stack.router import stack_router
 from sql_app.Team.router import team_router
@@ -10,12 +12,18 @@ from sql_app.database import db_instance
 
 app = FastAPI()
 
-
 @app.get("/")
 async def root():
-    html = WantedParser("https://www.wanted.co.kr").parse()
-    WantedCleanser(html).cleanser()
-    return HTMLResponse(content=html.__str__(), status_code=200)
+    return HTMLResponse(content="{code:200}", status_code=200)
+
+@app.get("/api/v1/async")
+async def async_data():
+    parser_dict = WantedParser("https://www.wanted.co.kr").parse()
+    cleansed_list = WantedCleanser(parser_dict).cleanser()
+    savers = Savers()
+    savers.add(JobSaver(cleansed_list))
+    savers.save()
+    return HTMLResponse(content=cleansed_list.__str__(), status_code=200)
 
 
 @app.get("/parse/jobs/{jobs_id}")

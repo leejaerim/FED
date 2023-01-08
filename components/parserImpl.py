@@ -20,6 +20,7 @@ class WantedParser(Parser):
             list_of_data[id] = self.get_info_of(str(id))
         return list_of_data
 
+    # id 목록
     def get_list_of_id(self) -> list:
         offset = 0
         limit = 1
@@ -39,9 +40,10 @@ class WantedParser(Parser):
             offset += limit
         return list_of_id
 
+    #id 정보
     def get_info_of(self, id: str) -> dict:
         if type(id) == "number" or id is None: raise Exception(f"다음 id({id})를 확인바랍니다.")
-        target_data = ["jd", "company_name", "logo_img", "address", "due_time", "requirements", "main_tasks", "is_newbie","is_expert"]
+        target_data = ["jd","position","company_id", "company_name", "logo_img", "address", "due_time", "requirements", "main_tasks", "is_newbie","is_expert","confirm_time" ,"location"]
         url = self.url + f"/wd/{id}"
         html = requests.get(url)
         soup = BeautifulSoup(html.text, "html.parser")
