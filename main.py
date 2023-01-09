@@ -4,6 +4,7 @@ from fastapi.responses import HTMLResponse
 from components.cleanserImpl import WantedCleanser
 from components.parserImpl import WantedParser
 from components.savers import Savers
+from saver.companysaver import CompanySaver
 from saver.jobsaver import JobSaver
 from sql_app.Employment.router import emp_router
 from sql_app.Stack.router import stack_router
@@ -22,6 +23,7 @@ async def async_data():
     cleansed_list = WantedCleanser(parser_dict).cleanser()
     savers = Savers()
     savers.add(JobSaver(cleansed_list))
+    savers.add(CompanySaver(cleansed_list))
     savers.save()
     return HTMLResponse(content=cleansed_list.__str__(), status_code=200)
 

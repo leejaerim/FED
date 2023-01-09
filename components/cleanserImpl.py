@@ -16,6 +16,7 @@ class WantedCleanser(Cleanser):
         for job_id in self.dict.keys():
             cleansed_data = {}
             job_data = self.dict[job_id]
+            cleansed_data['country'] = job_data['address']['country']
             cleansed_data['company_name'] = job_data['company_name']
             cleansed_data['company_id'] = job_data['company_id']
             cleansed_data['labels'] = self.get_stack(job_data['jd'])
@@ -24,6 +25,7 @@ class WantedCleanser(Cleanser):
             cleansed_data['register_date'] = job_data['confirm_time']
             cleansed_data['creer'] = job_data['is_newbie']
             cleansed_data['location'] = job_data['location']
+            cleansed_data['logo'] = job_data['logo_img']
             cleansed_data['emp_id'] = job_id
             cleansed_data['emp_title'] = job_data['position']
             data_list.append(cleansed_data)

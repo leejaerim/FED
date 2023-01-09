@@ -8,10 +8,13 @@ class JobSaver(Saver):
     def _save(self):
         for item in self._list:
             if not self.get_user_by_id(item['emp_id']):
+                del item['company_id']
                 del item['company_name']
                 del item['labels']
                 del item['team_name']
                 del item['location']
+                del item['country']
+                del item['logo']
                 emp = Emp(**item)
                 self.db.add(emp)
                 self.db.commit()
