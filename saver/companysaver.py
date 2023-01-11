@@ -8,7 +8,7 @@ class CompanySaver(Saver):
 
     def _save(self):
         for item in self._list:
-            if not self.get_item_by_id(item['company_id']):
+            if self.get_item_by_id(item['company_id']):
                 # del item['company_name']
 
                 del item['labels']

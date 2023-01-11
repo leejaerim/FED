@@ -1,7 +1,8 @@
+from sqlalchemy import column
+
 from components.cleanser import Cleanser
-from stack_list import eratos
-
-
+from sql_app.Stack.models import Stack
+from sql_app.database import get_db
 
 
 class WantedCleanser(Cleanser):
@@ -32,6 +33,9 @@ class WantedCleanser(Cleanser):
         return data_list
     def get_stack(self, jd:str) -> list:
         stack = []
+        eratos = []
+        for i in get_db().query(Stack).all():
+            eratos.append(i.stack_name)
         for word in eratos:
             if word in jd.lower():
                 stack.append(word)
