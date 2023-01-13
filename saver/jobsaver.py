@@ -6,24 +6,20 @@ from sql_app.Stack.models import Stack
 
 class JobSaver(Saver):
     db = get_db()
+
     def _save(self):
         for item in self._list:
-            if not self.get_user_by_id(item['emp_id']):
-                del item['company_id']
-                del item['company_name']
-                del item['team_name']
-                del item['location']
-                del item['country']
-                del item['logo']
-                item['stack_fk'] = self.get_stack_id_by_label(item['labels'])
-                del item['labels']
-                emp = Emp(**item)
+            if self.get_user_by_id(item['emp_id']):
+                emp_data = {'emp_id': item['emp_id'], 'emp_title': item['emp_title'],
+                            'register_date': item['register_date'], 'dead_line': item['dead_line'],
+                            'creer': item['creer'], 'stack_fk': self.get_stack_id_by_label(item['labels'])}
+                emp = Emp(**emp_data)
                 self.db.add(emp)
                 self.db.commit()
                 self.db.refresh(emp)
 
     def get_user_by_id(self, id: str) -> bool:
-        return self.db.query(Emp).filter(Emp.emp_id == id).first() is not None
+        return self.db.query(Emp).filter(Emp.emp_id == id).first() is None
 
     def get_stack_id_by_label(self, label_list: list) -> str:
         result = []

@@ -23,7 +23,7 @@ class WantedParser(Parser):
     # id 목록
     def get_list_of_id(self) -> list:
         offset = 0
-        limit = 1
+        limit = 20
         list_of_id = []
         flag = True
         # while (flag):
