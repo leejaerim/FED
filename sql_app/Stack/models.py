@@ -1,5 +1,14 @@
 from sqlalchemy import Table, Column, String, Integer
-from sql_app.database import db_metadata, db_engine
+from sql_app.database import db_metadata, db_engine, Base
+
+
+class Stack(Base):
+    __tablename__ = 'stack'
+    stack_id = Column("stack_id", Integer, primary_key=True, autoincrement=True)
+    stack_name = Column("stack_name", String(20), nullable=False)
+    description = Column("description", String(1000), nullable=False)
+    img = Column("img", String(1000), nullable=False)
+    type = Column("type", String(1), nullable=False)
 
 stack = Table(
     "stack",

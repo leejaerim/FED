@@ -11,8 +11,8 @@ stack_router = APIRouter()
 def get_db_conn(request: Request):
     return request.state.db_conn
 
-@stack_router.get("/stack",response_model=List[StackSelect])
-@stack_router.get("/stack/{page}",response_model=List[StackSelect])
+@stack_router.get("/api/v1/stack",response_model=List[StackSelect])
+@stack_router.get("/api/v1/stack/{page}",response_model=List[StackSelect])
 async def stack_select(
         page : int = 1,
         limit : int = 10,
@@ -22,7 +22,7 @@ async def stack_select(
     query = stack.select().offset(offset).limit(limit)
     return await db.fetch_all(query)
 
-@stack_router.post("/stack")
+@stack_router.post("/api/v1/stack")
 async def stack_create(
         req: StackCreate,
         db: Database = Depends(get_db_conn)
@@ -32,7 +32,7 @@ async def stack_create(
     await db.execute(query, values)
     return {**req.dict()}
 
-@stack_router.get("/stack/id/{id}",response_model=StackSelect)
+@stack_router.get("/api/v1/stack/id/{id}",response_model=StackSelect)
 async def stack_select(
         id : int,
         db : Database = Depends(get_db_conn)
@@ -40,7 +40,7 @@ async def stack_select(
     query = stack.select().where(stack.columns.stack_id == id)
     return await db.fetch_one(query)
 
-@stack_router.delete("/stack/{id}")
+@stack_router.delete("/api/v1/stack/{id}")
 async def stack_delete(
     id: int,
     db: Database = Depends(get_db_conn)

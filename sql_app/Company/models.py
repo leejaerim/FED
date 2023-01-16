@@ -11,3 +11,15 @@ class Company(Base):
     location = Column("location",String(100), nullable=True)
     country = Column("country", String(50), nullable=True)
     emp_fk = Column("emp_fk", ForeignKey("employment.emp_id"), nullable=True)
+
+company = Table(
+    "company",
+    db_metadata,
+    Column("company_id", Integer, primary_key=True, autoincrement=True),
+    Column("company_name", String(20), nullable=False),
+    Column("logo", String(100), nullable=True),
+    Column("location", String(100), nullable=True),
+    Column("country", String(50), nullable=True),
+    Column("emp_fk", Integer, ForeignKey("emp.emp_id"), nullable=True)
+)
+company.metadata.create_all(db_engine)

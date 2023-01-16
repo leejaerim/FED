@@ -6,6 +6,7 @@ from components.parserImpl import WantedParser
 from components.savers import Savers
 from saver.companysaver import CompanySaver
 from saver.jobsaver import JobSaver
+from sql_app.Company.router import company_router
 from sql_app.Employment.router import emp_router
 from sql_app.Stack.router import stack_router
 from sql_app.Team.router import team_router
@@ -61,3 +62,4 @@ async def state_insert(request: Request, call_next):
 app.include_router(stack_router)
 app.include_router(emp_router)
 app.include_router(team_router)
+app.include_router(company_router)
