@@ -11,8 +11,22 @@ from sql_app.Employment.router import emp_router
 from sql_app.Stack.router import stack_router
 from sql_app.Team.router import team_router
 from sql_app.database import db_instance
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+origins = [
+    "http://127.0.0.1:3000",
+    "http://localhost:3000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=False,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/")
 async def root():
