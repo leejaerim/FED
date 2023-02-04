@@ -16,7 +16,10 @@ class WantedParser(Parser):
         if self.url is None: raise Exception("url이 존재하지 않습니다.")
         list_id = self.get_list_of_id()
         list_of_data = {}
+        count=0
         for id in list_id:
+            print(count)
+            count+=1
             list_of_data[id] = self.get_info_of(str(id))
         return list_of_data
 
@@ -26,18 +29,20 @@ class WantedParser(Parser):
         limit = 20
         list_of_id = []
         flag = True
-        # while (flag):
-        # Todo: url parameters have to be refactored
-        html = requests.get(
-            self.url + f"/api/v4/jobs?1670145066301&country=kr&tag_type_ids=518&job_sort=company.response_rate_order&locations=all&years=-1&limit={limit}&offset={offset}")
-        soup = BeautifulSoup(html.text, "html.parser")
-        list_jo = json.loads(soup.text)
-        if list_jo["data"] is None:
-            flag = False
-        else:
-            for i in list_jo["data"]:
-                list_of_id.append(i["id"])
-            offset += limit
+        while (flag and offset < 100):
+        #Todo: url parameters have to be refactored
+            print(f"offset = {offset}")
+            html = requests.get(
+                self.url + f"/api/v4/jobs?1670145066301&country=kr&tag_type_ids=518&job_sort=company.response_rate_order&locations=all&years=-1&limit={limit}&offset={offset}")
+            soup = BeautifulSoup(html.text, "html.parser")
+            list_jo = json.loads(soup.text)
+            if list_jo["data"] is None:
+                flag = False
+            else:
+                for i in list_jo["data"]:
+                    list_of_id.append(i["id"])
+                offset += limit
+        print(len(list_of_id))
         return list_of_id
 
     #id 정보

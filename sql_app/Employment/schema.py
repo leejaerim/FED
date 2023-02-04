@@ -15,4 +15,4 @@ class EmpSelect(BaseModel):
     register_date: datetime
     dead_line: datetime
     creer: int
-    stack_fk: int
+    stack_fk: str

@@ -7,6 +7,7 @@ from sql_app.database import get_db
 
 class WantedCleanser(Cleanser):
     CleansedData = {}
+    eratos = []
     def __init__(self, _dict: dict) -> None:
         self.dict = _dict
     #company, lables, start_time,due_time,career,location
@@ -33,10 +34,10 @@ class WantedCleanser(Cleanser):
         return data_list
     def get_stack(self, jd:str) -> list:
         stack = []
-        eratos = []
-        for i in get_db().query(Stack).all():
-            eratos.append(i.stack_name)
-        for word in eratos:
+        if len(self.eratos) == 0 :
+            for i in get_db().query(Stack).all():
+                self.eratos.append(i.stack_name)
+        for word in self.eratos:
             if word in jd.lower():
                 stack.append(word)
         return stack

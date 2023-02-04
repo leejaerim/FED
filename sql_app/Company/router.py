@@ -20,7 +20,7 @@ def get_db_conn(request: Request):
 @company_router.get("/api/v1/company/{page}", response_model=List[CompanySelect])
 async def company_select(
         page: int = 1,
-        limit: int = 10,
+        limit: int = 20,
         db: Database = Depends(get_db_conn)
 ):
     offset = (page - 1) * limit
