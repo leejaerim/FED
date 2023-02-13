@@ -3,6 +3,7 @@ from datetime import datetime
 from pydantic import BaseModel
 
 
+
 class CompanySelect(BaseModel):
     company_id: int
     company_name: str

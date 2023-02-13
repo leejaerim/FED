@@ -7,7 +7,7 @@ class EmpCreate(BaseModel):
     register_date : datetime
     dead_line : datetime
     creer : int
-    stack_fk : int
+    company_fk : int
 
 class EmpSelect(BaseModel):
     emp_id : int
@@ -15,4 +15,7 @@ class EmpSelect(BaseModel):
     register_date: datetime
     dead_line: datetime
     creer: int
-    stack_fk: str
+
+class EmpStackSelect(BaseModel):
+    emp_fk : int
+    stack_fk : int
