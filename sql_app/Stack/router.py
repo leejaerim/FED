@@ -16,16 +16,19 @@ stack_router = APIRouter()
 def get_db_conn(request: Request):
     return request.state.db_conn
 
-@stack_router.get("/api/v1/stack",response_model=List[StackSelect])
-@stack_router.get("/api/v1/stack/{page}",response_model=List[StackSelect])
+@stack_router.get("/api/v1/stack",response_model=dict)
+@stack_router.get("/api/v1/stack/{page}",response_model=dict)
 async def stack_select(
         page : int = 1,
-        limit : int = 10,
+        limit : int = 9,
         db : Database = Depends(get_db_conn)
 ):
     offset = (page-1)*limit
     query = stack.select().offset(offset).limit(limit)
-    return await db.fetch_all(query)
+    stack_list = {}
+    stack_list['total'] = len(await db.fetch_all(stack.select()))
+    stack_list['row'] = await db.fetch_all(query)
+    return stack_list
 
 @stack_router.post("/api/v1/stack")
 async def stack_create(
