@@ -1,3 +1,8 @@
+# Tech Spec
+
+TECH SPEC [FED App](https://south-sunshine-1a6.notion.site/FED-7e9dbb96be18422ab8becf127a5fa367?pvs=4)
+
+
 ### Poetry 
 
 - 하나의 가상환경
