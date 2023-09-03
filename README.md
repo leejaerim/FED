@@ -2,7 +2,7 @@
 
 TECH SPEC [FED App](https://south-sunshine-1a6.notion.site/FED-7e9dbb96be18422ab8becf127a5fa367?pvs=4)
 
-
+# Dependency
 ### Poetry 
 
 - 하나의 가상환경
@@ -12,5 +12,5 @@ TECH SPEC [FED App](https://south-sunshine-1a6.notion.site/FED-7e9dbb96be18422ab
 
 - 인터프리터 변경을 통해 3.11 버전을 꼭 확인하여 작업을 진행하도록 한다.
 
-### add package to using mysql  
+### SQLAlchemy
 - `poetry add SQLAlchemy mysqlclient PyMySQL 'databases[mysql]'`
